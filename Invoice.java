@@ -1,10 +1,87 @@
 package InvoiceSystem;
 
+import java.util.Objects;
+
 public class Invoice {
 
     Integer id;
     String date;
     Integer NoOfItems;
     Float totalAmount;
-    
+    Float paidAmount;
+    Float balance;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public Integer getNoOfItems() {
+        return NoOfItems;
+    }
+
+    public void setNoOfItems(Integer noOfItems) {
+        NoOfItems = noOfItems;
+    }
+
+    public Float getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(Float totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public Float getPaidAmount() {
+        return paidAmount;
+    }
+
+    public void setPaidAmount(Float paidAmount) {
+        this.paidAmount = paidAmount;
+    }
+
+    public Float getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Float balance) {
+        this.balance = balance;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Invoice invoice = (Invoice) o;
+        return Objects.equals(id, invoice.id) && Objects.equals(date, invoice.date) && Objects.equals(NoOfItems, invoice.NoOfItems) && Objects.equals(totalAmount, invoice.totalAmount) && Objects.equals(paidAmount, invoice.paidAmount) && Objects.equals(balance, invoice.balance);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, date, NoOfItems, totalAmount, paidAmount, balance);
+
+    }
+
+    @Override
+    public String toString() {
+        return "Invoice{" +
+                "date='" + date + '\'' +
+                ", NoOfItems=" + NoOfItems +
+                ", totalAmount=" + totalAmount +
+                ", paidAmount=" + paidAmount +
+                ", balance=" + balance +
+                '}';
+    }
 }
+
