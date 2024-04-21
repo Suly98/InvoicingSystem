@@ -9,6 +9,7 @@ public class Invoice {
     Integer id;
     Item item;
     Date date;
+    Customer customer;
     String header;
     Integer NoOfItems;
     Float totalAmount;
@@ -27,6 +28,14 @@ public class Invoice {
 
     public Item getItem() {
         return item;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public void setItem(Item item) {
@@ -117,6 +126,7 @@ public class Invoice {
         return "Invoice{" +
                 "item=" + item +
                 ", date=" + date +
+                ", customer=" + customer +
                 ", header='" + header + '\'' +
                 ", NoOfItems=" + NoOfItems +
                 ", totalAmount=" + totalAmount +
