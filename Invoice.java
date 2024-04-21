@@ -1,15 +1,61 @@
 package InvoiceSystem;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 public class Invoice {
 
     Integer id;
-    String date;
+    Item item;
+    Date date;
+    String header;
     Integer NoOfItems;
     Float totalAmount;
     Float paidAmount;
     Float balance;
+    List<Invoice> invoices;
+
+    //to add invoices
+    public void addInvoice(Invoice invoice){
+        invoices.add(invoice);
+    }
+
+    public void loadInvoices(){
+        System.out.println(invoices.toString());
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public String getHeader() {
+        return header;
+    }
+
+    public void setHeader(String header) {
+        this.header = header;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public List<Invoice> getInvoices() {
+        return invoices;
+    }
+
+    public void setInvoices(List<Invoice> invoices) {
+        this.invoices = invoices;
+    }
 
     public Integer getId() {
         return id;
@@ -19,13 +65,6 @@ public class Invoice {
         this.id = id;
     }
 
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
 
     public Integer getNoOfItems() {
         return NoOfItems;
@@ -76,11 +115,14 @@ public class Invoice {
     @Override
     public String toString() {
         return "Invoice{" +
-                "date='" + date + '\'' +
+                "item=" + item +
+                ", date=" + date +
+                ", header='" + header + '\'' +
                 ", NoOfItems=" + NoOfItems +
                 ", totalAmount=" + totalAmount +
                 ", paidAmount=" + paidAmount +
                 ", balance=" + balance +
+                ", invoices=" + invoices +
                 '}';
     }
 }
