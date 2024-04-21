@@ -38,10 +38,6 @@ public class MainMenu {
     }
 
     public static void shopSettings(){
-
-    }
-
-    public static void manageShopItems(){
         int word;
         do {
             System.out.println("            Shop Settings:      ");
@@ -52,7 +48,7 @@ public class MainMenu {
             System.out.print("Enter your option: ");
             word = sc.nextInt();
             if (word == 1) {
-                //loadData();
+                loadData();
             } else if (word == 2) {
                 //setShopName();
             } else if (word == 3) {
@@ -61,7 +57,12 @@ public class MainMenu {
         } while (word != 4);
     }
     public static void loadData(){
-        
+        Item.loadItems();
+
+    }
+
+    public static void manageShopItems() {
+
     }
 
 }
