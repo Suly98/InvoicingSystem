@@ -115,27 +115,44 @@ public class MainMenu {
 
         item1.print();
         if(items.contains(item1)){
-            System.out.println("Items added Successfully!");
+            System.out.println("Items added Successfully!\n");
         } else {
-            System.out.println("Items wasn't added!");
+            System.out.println("Items wasn't added!\n");
         }
     }
 
     public static void removeItem(){
+        sc.nextLine();
         System.out.println("Enter the item name that you want to remove: ");
         String name = sc.nextLine();
 
-        items.remove(name);
+        //I tried items.remove but it didn't work because it is not addressed the same in the code
+        // but removeif does the wonderful job
+        items.removeIf(item -> item.getName().equals(name));
+
 
         if(!items.contains(name)){
-            System.out.println("Item "+ name + " was remove successfully!");
+            System.out.println("Item "+ name + " was remove successfully!\n");
         } else {
-            System.out.println("Items wasn't remove successfully!");
+            System.out.println("Items wasn't remove successfully!\n");
+        }
+
+        System.out.println(items.toString());
+    }
+
+    public static void changeItemPrice(){
+        sc.nextLine();
+
+        System.out.println("Enter the item number that you want to change its price: ");
+        Integer itemNo = sc.nextInt();
+
+        System.out.println("Enter the new price: ");
+        Float newPrice = sc.nextFloat();
+        for(Item item: items){
+            System.out.println(item);
         }
 
     }
-
-    
 
 
 }
