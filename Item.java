@@ -1,26 +1,44 @@
 package InvoiceSystem;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Item {
+    public static int counter = 1;
     Integer id;
     String name;
     Float price;
     Integer quantity;
-    List<Item> items;
+    List<Item> items = new ArrayList<>();
 
-    //to add items
-    public void addItems(Item item){
-        items.add(item);
+    public Item(String name, Float price, Integer quantity) {
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
     }
 
-    public static void loadItems(Item items){
+//    public void printAll(){
+//        System.out.println(items);
+//    }
+
+    /*-------------fUNCTIONS------------*/
+    //to add items
+    public void addToList(Item item) {
+        items.add(item);
         System.out.println(items.toString());
     }
 
+    //to print all items
+    public void print() {
+        System.out.println("Item No: " + calculateId());
+        System.out.println("Item Name: " + name);
+        System.out.printf("Price: " + price);
+        System.out.println("Quantity: " + quantity);
+    }
+
     //to delete items
-    public void delItems(Item item){
+    public void removeItem(Item item) {
         items.remove(item);
     }
 
@@ -29,11 +47,11 @@ public class Item {
         item.setPrice(newPrice);
     }
 
+    public double total() {
+        double total = 0;
+        total += price * quantity;
 
-    public Item(String name, Float price, Integer quantity) {
-        this.name = name;
-        this.price = price;
-        this.quantity = quantity;
+        return total;
     }
 
     public Integer getId() {
@@ -41,7 +59,11 @@ public class Item {
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this.id = calculateId();
+    }
+
+    public int calculateId() {
+        return Item.counter++;
     }
 
     public String getName() {
@@ -56,16 +78,16 @@ public class Item {
         return price;
     }
 
+    public void setPrice(Float price) {
+        this.price = price;
+    }
+
     public List<Item> getItems() {
         return items;
     }
 
     public void setItems(List<Item> items) {
         this.items = items;
-    }
-
-    public void setPrice(Float price) {
-        this.price = price;
     }
 
     public Integer getQuantity() {
@@ -75,6 +97,7 @@ public class Item {
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -95,7 +118,6 @@ public class Item {
                 "name='" + name + '\'' +
                 ", price=" + price +
                 ", quantity=" + quantity +
-                ", items=" + items +
                 '}';
     }
 }
