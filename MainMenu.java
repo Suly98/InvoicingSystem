@@ -102,7 +102,24 @@ public class MainMenu {
 
     }
 
-  
+    public static String setShopName() {
+        System.out.println("Enter the shop name: ");
+        String shopName = sc.nextLine();
+        System.out.println("The new shop is: " + shopName);
+
+        return shopName;
+    }
+
+    public static String setInvoiceHeader() {
+        System.out.println("Enter The invoice header(Phone/Tel/Website/Fax): ");
+        String invoiceHeader = sc.nextLine();
+
+        System.out.println("The new shop is: " + invoiceHeader);
+
+        return invoiceHeader;
+    }
+
+
 
 
     /***************** MANAGE SHOP ITEMS ************/
