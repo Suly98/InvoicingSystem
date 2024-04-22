@@ -3,6 +3,10 @@ package InvoiceSystem;
 import java.util.*;
 
 public class MainMenu {
+    public static List<Item> items = new ArrayList<>();
+    public Integer itemsCounter;
+    public Integer invoiceCounter;
+
     public static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args){
@@ -35,6 +39,7 @@ public class MainMenu {
                // programStatistics();
             }
         } while (word != 8);
+
     }
 
     public static void shopSettings(){
@@ -57,12 +62,80 @@ public class MainMenu {
         } while (word != 4);
     }
     public static void loadData(){
-        Item.loadItems();
+//        Item.loadItems();
 
+    }
+    public static String setShopName(){
+        System.out.println("Enter the shop name: ");
+        String shopName = sc.nextLine();
+        System.out.println("The new shop is: " + shopName);
+
+        return shopName;
     }
 
     public static void manageShopItems() {
+        int word;
+        do {
+            System.out.println("        Manage Shop Items:      ");
+            System.out.println("1- Add items ");
+            System.out.println("2- Delete Items ");
+            System.out.println("3- Change Item price");
+            System.out.println("4- Report Item Price");
+            System.out.println("5- Go Back ");
+            System.out.print("Enter your option: ");
+            word = sc.nextInt();
+            if (word == 1) {
+                addItems();
+            } else if (word == 2) {
+                removeItem();
+
+            } else if (word == 3) {
+                changeItemPrice();
+            }
+             else if (word == 4) {
+
+            }
+        } while (word != 4);
+    }
+
+
+
+    public static void addItems(){
+        sc.nextLine();
+        System.out.println("What is the item's name: ");
+        String name = sc.nextLine();
+        System.out.println("What is the item's price? ");
+        Float price = sc.nextFloat();
+        System.out.println("How many did you buy? ");
+        Integer quantity = sc.nextInt();
+
+
+        Item item1 = new Item(name,price,quantity);
+        items.add(item1);
+
+        item1.print();
+        if(items.contains(item1)){
+            System.out.println("Items added Successfully!");
+        } else {
+            System.out.println("Items wasn't added!");
+        }
+    }
+
+    public static void removeItem(){
+        System.out.println("Enter the item name that you want to remove: ");
+        String name = sc.nextLine();
+
+        items.remove(name);
+
+        if(!items.contains(name)){
+            System.out.println("Item "+ name + " was remove successfully!");
+        } else {
+            System.out.println("Items wasn't remove successfully!");
+        }
 
     }
+
+    
+
 
 }
