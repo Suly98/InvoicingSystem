@@ -4,12 +4,12 @@ import java.util.*;
 
 public class MainMenu {
     public static List<Item> items = new ArrayList<>();
+    public static HashMap<Integer, Invoice> invoiceHashMap = new HashMap<>();
+    public static Scanner sc = new Scanner(System.in);
     public Integer itemsCounter;
     public Integer invoiceCounter;
 
-    public static Scanner sc = new Scanner(System.in);
-
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Integer word;
         do {
             System.out.println("           Application Main Menu:       ");
@@ -28,100 +28,82 @@ public class MainMenu {
             } else if (word == 2) {
                 manageShopItems();
             } else if (word == 3) {
-                //createNewInvoice();
+                createNewInvoice();
             } else if (word == 4) {
-                //reportStatistics();
+                reportStatistics();
             } else if (word == 5) {
-                //reportAllInvoices();
+                reportAllInvoices();
             } else if (word == 6) {
                 //searchInvoices();
             } else if (word == 7) {
-               // programStatistics();
+                // programStatistics();
             }
         } while (word != 8);
 
     }
 
-    public static void shopSettings(){
-        int word;
-        do {
-            System.out.println("            Shop Settings:      ");
-            System.out.println("1-Load Data (Items and invoices)");
-            System.out.println("2-Set Shop Name (data should be saved)");
-            System.out.println("3-Set Invoice Header (Tel / Fax / Email / Website)");
-            System.out.println("4-Go Back");
-            System.out.print("Enter your option: ");
-            word = sc.nextInt();
-            if (word == 1) {
-                loadData();
-            } else if (word == 2) {
-                //setShopName();
-            } else if (word == 3) {
-                //setInvoiceHeader();
-            }
-        } while (word != 4);
-    }
-    public static void loadData(){
-//        Item.loadItems();
 
-    }
-    public static String setShopName(){
-        System.out.println("Enter the shop name: ");
-        String shopName = sc.nextLine();
-        System.out.println("The new shop is: " + shopName);
-
-        return shopName;
+    public static void createNewInvoice() {
+        sc.nextLine();
+        System.out.println("Enter the invoice date: ");
+        System.out.println("Enter the Customer name: ");
+        System.out.println("Enter the ");
     }
 
-    public static void manageShopItems() {
-        int word;
-        do {
-            System.out.println("        Manage Shop Items:      ");
-            System.out.println("1- Add items ");
-            System.out.println("2- Delete Items ");
-            System.out.println("3- Change Item price");
-            System.out.println("4- Report Item Price");
-            System.out.println("5- Go Back ");
-            System.out.print("Enter your option: ");
-            word = sc.nextInt();
-            if (word == 1) {
-                addItems();
-            } else if (word == 2) {
-                removeItem();
+    public static void reportStatistics() {
+        sc.nextLine();
+        System.out.println("         Statistics:    ");
+        System.out.println("No of Items:  " + items.size());
+        System.out.println("No of Invoices: " + invoiceHashMap.size());
+        System.out.println("Total of Sales: " + totalSales());
+    }
 
-            } else if (word == 3) {
-                changeItemPrice();
-            }
-             else if (word == 4) {
+    public static Double totalSales(){
+        Double totalSales = 0.0;
+        for (Invoice invoice: invoiceHashMap.values()){
+            totalSales += invoice.total();
+        }
 
-            }
-        } while (word != 4);
+        return totalSales;
+    }
+
+
+    public static void reportAllInvoices(){
+        System.out.println("    All Invoices:   ");
+        for(Invoice invoice: invoiceHashMap.values()){
+            invoice.printInvoice();
+        }
     }
 
 
 
-    public static void addItems(){
+    /***************** MANAGE SHOP ITEMS ************/
+    public static void addItems() {
+        sc.nextLine();
+        System.out.println("Enter the item number: ");
+        Integer id = sc.nextInt();
         sc.nextLine();
         System.out.println("What is the item's name: ");
         String name = sc.nextLine();
         System.out.println("What is the item's price? ");
         Float price = sc.nextFloat();
+        sc.nextLine();
         System.out.println("How many did you buy? ");
         Integer quantity = sc.nextInt();
 
 
-        Item item1 = new Item(name,price,quantity);
+        Item item1 = new Item(name, price, quantity);
         items.add(item1);
 
         item1.print();
-        if(items.contains(item1)){
+        if (items.contains(item1)) {
             System.out.println("Items added Successfully!\n");
         } else {
             System.out.println("Items wasn't added!\n");
         }
     }
 
-    public static void removeItem(){
+    public static void removeItem() {
         sc.nextLine();
         System.out.println("Enter the item name that you want to remove: ");
         String name = sc.nextLine();
@@ -131,16 +113,15 @@ public class MainMenu {
         items.removeIf(item -> item.getName().equals(name));
 
 
-        if(!items.contains(name)){
-            System.out.println("Item "+ name + " was remove successfully!\n");
+        if (!items.contains(name)) {
+            System.out.println("Item " + name + " was remove successfully!\n");
         } else {
             System.out.println("Items wasn't remove successfully!\n");
         }
 
-        System.out.println(items.toString());
     }
 
-    public static void changeItemPrice(){
+    public static void changeItemPrice() {
         sc.nextLine();
 
         System.out.println("Enter the item number that you want to change its price: ");
@@ -148,8 +129,20 @@ public class MainMenu {
 
         System.out.println("Enter the new price: ");
         Float newPrice = sc.nextFloat();
-        for(Item item: items){
-            System.out.println(item);
+        for (Item item : items) {
+            if (item.id == itemNo) {
+                item.setPrice(newPrice);
+                System.out.println("Item price was changed successfully!\n");
+            } else {
+                System.out.println("Item not found!\n");
+            }
+        }
+
+    }
+
+    public static void reportItems() {
+        for (Item item : items) {
+            item.print();
         }
 
     }
