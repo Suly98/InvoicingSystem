@@ -11,7 +11,7 @@ public class Invoice {
 
     Integer id;
     Item item;
-    Date date;
+    String date;
     Customer fullName;
     String header;
     Integer NoOfItems;
@@ -90,7 +90,7 @@ public class Invoice {
         this.item = item;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
@@ -102,7 +102,7 @@ public class Invoice {
         this.header = header;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
