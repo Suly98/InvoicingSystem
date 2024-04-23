@@ -11,6 +11,7 @@ public class Invoice {
 
     //Attributes
     Integer id;
+    String shopName;
     List<Item> items;
     String date;
     Customer customer;
@@ -19,7 +20,6 @@ public class Invoice {
     Double totalAmount;
     Double paidAmount;
     Double balance;
-    List<Invoice> invoices = new ArrayList<>();
 
 
     public static Integer generateId() {
@@ -39,31 +39,29 @@ public class Invoice {
 
     /*-------------fUNCTIONS------------*/
     //to add invoices
-    public void addInvoice(Invoice invoice) {
-        invoices.add(invoice);
-    }
+//    public void addInvoice(Invoice invoice) {
+//        invoices.add(invoice);
+//    }
 
     //to print invoices
     public void printInvoice() {
-        System.out.println("Invoice No: " + generateId());
+        System.out.println("Invoice No: " + id);
+        System.out.println("Shop name:  " + shopName);
         System.out.println("Invoice header:  " + header);
-        System.out.println("Shop name:  " + getShopName());
         System.out.println("Invoice Date: " + date);
         System.out.println("Customer Name: " + customer.fullName);
         System.out.println("Items:" + getItems());
         System.out.println("Paid Amount: " + getPaidAmount());
-        System.out.println("Total amount : %.2d" + getTotalAmount());
+        System.out.println("Total amount : " + getTotalAmount());
         System.out.println("The Balanced left: " + getBalance());
+        System.out.println("\n");
 
     }
 
-    public String getShopName() {
-        String shopName = MainMenu.setShopName();
-        return shopName;
-    }
+
 
     public List<Item> getItems() {
-        for (Item item : MainMenu.items) {
+        for (Item item : items) {
             item.print();
         }
         return items;
@@ -72,6 +70,15 @@ public class Invoice {
     public void setItems(List<Item> items) {
         this.items = items;
     }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
+    public String getShopName() {
+        return shopName;
+    }
+
+
 
     public Customer getCustomer() {
         return customer;
@@ -97,20 +104,12 @@ public class Invoice {
         this.header = header;
     }
 
-    public List<Invoice> getInvoices() {
-        return invoices;
-    }
-
-    public void setInvoices(List<Invoice> invoices) {
-        this.invoices = invoices;
-    }
-
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId() {
+        this.id = generateId();
     }
 
     public Integer getNoOfItems() {
@@ -140,12 +139,13 @@ public class Invoice {
     }
 
     public Double getBalance() {
-        if (getPaidAmount() > getTotalAmount()) {
+        if (getPaidAmount() >= getTotalAmount()) {
             balance = getPaidAmount() - getTotalAmount();
 
         } else if (getTotalAmount() > getPaidAmount()) {
             Double leftAmount = getTotalAmount() - getPaidAmount();
             System.out.println("You have " + leftAmount + "left to Pay!!");
+            balance = 0-leftAmount;
 
         }
         return balance;
@@ -180,7 +180,6 @@ public class Invoice {
                 ", totalAmount=" + totalAmount +
                 ", paidAmount=" + paidAmount +
                 ", balance=" + balance +
-                ", invoices=" + invoices +
                 '}';
     }
 }
