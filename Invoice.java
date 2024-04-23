@@ -1,18 +1,19 @@
 package InvoiceSystem;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-import static InvoiceSystem.MainMenu.items;
-
 public class Invoice {
 
+    //To auto add the invoices id and incrementing them one by one:
+    public static Integer nextId = 1;
+
+    //Attributes
     Integer id;
-    Item item;
+    List<Item> items;
     String date;
-    Customer fullName;
+    Customer customer;
     String header;
     Integer NoOfItems;
     Double totalAmount;
@@ -21,22 +22,24 @@ public class Invoice {
     List<Invoice> invoices = new ArrayList<>();
 
 
-//    public Invoice(Date date, Customer fullName,
-//                   String header, Integer noOfItems,
-//                   Double totalAmount, Double paidAmount,
-//                   Double balance) {
-//        this.date = date;
-//        this.fullName = fullName;
-//        this.header = header;
-//        NoOfItems = noOfItems;
-//        this.totalAmount = totalAmount;
-//        this.paidAmount = paidAmount;
-//        this.balance = balance;
-//    }
+    public static Integer generateId() {
+        return nextId++;
+    }
+
+    // calculate the total amount
+    public static double calculateTotalAmount(List<Item> items) {
+        Double totalAmt = 0d;
+        for (Item i : items) {
+            for (int j = 1; j <= i.getQuantity(); j++) {
+                totalAmt += i.getPrice().doubleValue();
+            }
+        }
+        return totalAmt;
+    }
 
     /*-------------fUNCTIONS------------*/
     //to add invoices
-    public void addInvoice(Invoice invoice){
+    public void addInvoice(Invoice invoice) {
         invoices.add(invoice);
     }
 
@@ -44,54 +47,46 @@ public class Invoice {
     public void printInvoice() {
         System.out.println("Invoice No: " + generateId());
         System.out.println("Invoice header:  " + header);
-        System.out.println("Shop name:  " + MainMenu.setShopName());
+        System.out.println("Shop name:  " + getShopName());
         System.out.println("Invoice Date: " + date);
-        System.out.println("Customer Name: " + fullName);
-        System.out.println("Items:" + getItem());
-        System.out.println("Paid Amount: " + paidAmount);
-        System.out.println("Total amount : " + total());
-        System.out.println("The Balanced left" + balance);
+        System.out.println("Customer Name: " + customer.fullName);
+        System.out.println("Items:" + getItems());
+        System.out.println("Paid Amount: " + getPaidAmount());
+        System.out.println("Total amount : %.2d" + getTotalAmount());
+        System.out.println("The Balanced left: " + getBalance());
 
     }
 
-
-    //the total of the items amount!
-    public double total() {
-        double total = 0;
-        total += item.getPrice() * item.getQuantity();
-
-        return total;
+    public String getShopName() {
+        String shopName = MainMenu.setShopName();
+        return shopName;
     }
 
-
-    //To auto add the invoices id and incrementing them one by one:
-    public static Integer nextId= 1;
-
-    public static Integer generateId(){
-        return nextId++;
-    }
-
-    public Item getItem() {
-        for(Item item: items){
+    public List<Item> getItems() {
+        for (Item item : MainMenu.items) {
             item.print();
         }
-        return item;
+        return items;
     }
 
-    public Customer getFullName() {
-        return fullName;
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 
-    public void setFullName(Customer fullName) {
-        this.fullName = fullName;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setItem(Item item) {
-        this.item = item;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public String getDate() {
         return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getHeader() {
@@ -100,10 +95,6 @@ public class Invoice {
 
     public void setHeader(String header) {
         this.header = header;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
     }
 
     public List<Invoice> getInvoices() {
@@ -122,19 +113,18 @@ public class Invoice {
         this.id = id;
     }
 
-
     public Integer getNoOfItems() {
 
         return NoOfItems;
     }
 
     public void setNoOfItems(Integer noOfItems) {
-        noOfItems += item.getQuantity();
+        noOfItems += items.size();
         NoOfItems = noOfItems;
     }
 
     public Double getTotalAmount() {
-        return totalAmount;
+        return Double.parseDouble(String.format("%.2f", totalAmount));
     }
 
     public void setTotalAmount(Double totalAmount) {
@@ -150,7 +140,14 @@ public class Invoice {
     }
 
     public Double getBalance() {
-        balance = getPaidAmount() - getTotalAmount();
+        if (getPaidAmount() > getTotalAmount()) {
+            balance = getPaidAmount() - getTotalAmount();
+
+        } else if (getTotalAmount() > getPaidAmount()) {
+            Double leftAmount = getTotalAmount() - getPaidAmount();
+            System.out.println("You have " + leftAmount + "left to Pay!!");
+
+        }
         return balance;
     }
 
@@ -175,9 +172,9 @@ public class Invoice {
     @Override
     public String toString() {
         return "Invoice{" +
-                "item=" + item +
+                "item=" + items +
                 ", date=" + date +
-                ", customer=" + fullName +
+                ", customer=" + customer +
                 ", header='" + header + '\'' +
                 ", NoOfItems=" + NoOfItems +
                 ", totalAmount=" + totalAmount +
