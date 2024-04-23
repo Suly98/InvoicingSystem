@@ -10,59 +10,56 @@ public class Item {
     String name;
     Float price;
     Integer quantity;
-    List<Item> items = new ArrayList<>();
+
 
     public Item(String name, Float price, Integer quantity) {
+
         this.name = name;
         this.price = price;
         this.quantity = quantity;
     }
 
-//    public void printAll(){
-//        System.out.println(items);
-//    }
 
     /*-------------fUNCTIONS------------*/
     //to add items
-    public void addToList(Item item) {
+/*    public void addToList(Item item) {
         items.add(item);
         System.out.println(items.toString());
-    }
+    }*/
+
+
 
     //to print all items
     public void print() {
-        System.out.println("Item No: " + calculateId());
+        System.out.println("");
+        System.out.println("Item No: " + id);
         System.out.println("Item Name: " + name);
-        System.out.printf("Price: " + price);
+        System.out.printf("Price: %.2f%n", price);
         System.out.println("Quantity: " + quantity);
     }
 
     //to delete items
-    public void removeItem(Item item) {
+/*    public void removeItem(Item item) {
         items.remove(item);
-    }
+    }*/
 
     //to change item price
     public void changeItemPrice(Item item, Float newPrice) {
         item.setPrice(newPrice);
     }
 
-    public double total() {
-        double total = 0;
-        total += price * quantity;
 
-        return total;
-    }
+
 
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId() {
         this.id = calculateId();
     }
 
-    public int calculateId() {
+        public static int calculateId() {
         return Item.counter++;
     }
 
@@ -82,14 +79,6 @@ public class Item {
         this.price = price;
     }
 
-    public List<Item> getItems() {
-        return items;
-    }
-
-    public void setItems(List<Item> items) {
-        this.items = items;
-    }
-
     public Integer getQuantity() {
         return quantity;
     }
@@ -104,12 +93,12 @@ public class Item {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Item item = (Item) o;
-        return Objects.equals(id, item.id) && Objects.equals(name, item.name) && Objects.equals(price, item.price) && Objects.equals(quantity, item.quantity) && Objects.equals(items, item.items);
+        return Objects.equals(id, item.id) && Objects.equals(name, item.name) && Objects.equals(price, item.price) && Objects.equals(quantity, item.quantity);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, price, quantity, items);
+        return Objects.hash(id, name, price, quantity);
     }
 
     @Override
@@ -121,4 +110,5 @@ public class Item {
                 ", quantity=" + quantity +
                 '}';
     }
+
 }
