@@ -1,41 +1,89 @@
 package InvoiceSystem;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+
+import static InvoiceSystem.MainMenu.items;
 
 public class Invoice {
 
     Integer id;
     Item item;
     Date date;
-    Customer customer;
+    Customer fullName;
     String header;
     Integer NoOfItems;
-    Float totalAmount;
-    Float paidAmount;
-    Float balance;
-    List<Invoice> invoices;
+    Double totalAmount;
+    Double paidAmount;
+    Double balance;
+    List<Invoice> invoices = new ArrayList<>();
 
+
+//    public Invoice(Date date, Customer fullName,
+//                   String header, Integer noOfItems,
+//                   Double totalAmount, Double paidAmount,
+//                   Double balance) {
+//        this.date = date;
+//        this.fullName = fullName;
+//        this.header = header;
+//        NoOfItems = noOfItems;
+//        this.totalAmount = totalAmount;
+//        this.paidAmount = paidAmount;
+//        this.balance = balance;
+//    }
+
+    /*-------------fUNCTIONS------------*/
     //to add invoices
     public void addInvoice(Invoice invoice){
         invoices.add(invoice);
     }
 
-    public void loadInvoices(){
-        System.out.println(invoices.toString());
+    //to print invoices
+    public void printInvoice() {
+        System.out.println("Invoice No: " + generateId());
+        System.out.println("Invoice header:  " + header);
+        System.out.println("Shop name:  " + MainMenu.setShopName());
+        System.out.println("Invoice Date: " + date);
+        System.out.println("Customer Name: " + fullName);
+        System.out.println("Items:" + getItem());
+        System.out.println("Paid Amount: " + paidAmount);
+        System.out.println("Total amount : " + total());
+        System.out.println("The Balanced left" + balance);
+
+    }
+
+
+    //the total of the items amount!
+    public double total() {
+        double total = 0;
+        total += item.getPrice() * item.getQuantity();
+
+        return total;
+    }
+
+
+    //To auto add the invoices id and incrementing them one by one:
+    public static Integer nextId= 1;
+
+    public static Integer generateId(){
+        return nextId++;
     }
 
     public Item getItem() {
+        for(Item item: items){
+            item.print();
+        }
         return item;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public Customer getFullName() {
+        return fullName;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setFullName(Customer fullName) {
+        this.fullName = fullName;
     }
 
     public void setItem(Item item) {
@@ -76,34 +124,37 @@ public class Invoice {
 
 
     public Integer getNoOfItems() {
+
         return NoOfItems;
     }
 
     public void setNoOfItems(Integer noOfItems) {
+        noOfItems += item.getQuantity();
         NoOfItems = noOfItems;
     }
 
-    public Float getTotalAmount() {
+    public Double getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(Float totalAmount) {
+    public void setTotalAmount(Double totalAmount) {
         this.totalAmount = totalAmount;
     }
 
-    public Float getPaidAmount() {
+    public Double getPaidAmount() {
         return paidAmount;
     }
 
-    public void setPaidAmount(Float paidAmount) {
+    public void setPaidAmount(Double paidAmount) {
         this.paidAmount = paidAmount;
     }
 
-    public Float getBalance() {
+    public Double getBalance() {
+        balance = getPaidAmount() - getTotalAmount();
         return balance;
     }
 
-    public void setBalance(Float balance) {
+    public void setBalance(Double balance) {
         this.balance = balance;
     }
 
@@ -126,7 +177,7 @@ public class Invoice {
         return "Invoice{" +
                 "item=" + item +
                 ", date=" + date +
-                ", customer=" + customer +
+                ", customer=" + fullName +
                 ", header='" + header + '\'' +
                 ", NoOfItems=" + NoOfItems +
                 ", totalAmount=" + totalAmount +
