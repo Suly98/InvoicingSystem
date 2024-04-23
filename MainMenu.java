@@ -1,5 +1,7 @@
 package InvoiceSystem;
 
+import com.sun.tools.javac.Main;
+
 import java.util.*;
 
 public class MainMenu {
@@ -34,7 +36,7 @@ public class MainMenu {
             } else if (word == 5) {
                 reportAllInvoices();
             } else if (word == 6) {
-                //searchInvoices();
+                searchInvoices();
             } else if (word == 7) {
                 // programStatistics();
             }
@@ -42,9 +44,22 @@ public class MainMenu {
 
     }
 
+    public static void searchInvoices(){
+        System.out.println("Enter the invoice number that you want to search: ");
+        Integer invoiceNo = sc.nextInt();
+
+        for(Invoice invoice: invoiceHashMap.values()){
+            if(invoice.id == invoiceNo){
+                invoice.printInvoice();
+            }
+        }
+    }
+
 
     public static void createNewInvoice() {
+
         sc.nextLine();
+        MainMenu.items.clear();
         System.out.println("Enter the invoice date (YY-MM-DD): ");
         String date = sc.nextLine();
         System.out.println("Enter the Customer name: ");
@@ -63,18 +78,27 @@ public class MainMenu {
         invoice.setHeader(setInvoiceHeader());
         invoice.setDate(date);
         invoice.setPaidAmount(amountPaid);
+        invoice.setShopName(setShopName());
 
-        invoice.setItems(items);
+
+        addItems();
+
+
+        invoice.setItems(MainMenu.items);
+
         invoice.setTotalAmount(Invoice.calculateTotalAmount(invoice.getItems()));
 
-        //adding invoice to the invoice map:
+        //setting an id n adding invoice to the invoice map:
+        invoice.setId();
         invoiceHashMap.put(invoice.getId(), invoice);
+
 
         //to print the invoice
         invoice.printInvoice();
 
 
     }
+
 
     public static void reportStatistics() {
         sc.nextLine();
@@ -115,12 +139,15 @@ public class MainMenu {
             word = sc.nextInt();
             if (word == 1) {
                 loadData();
+                sc.nextLine();
             } else if (word == 2) {
                 setShopName();
+                sc.nextLine();
             } else if (word == 3) {
                 setInvoiceHeader();
             }
         } while (word != 4);
+
     }
 
     public static void loadData() {
@@ -130,7 +157,6 @@ public class MainMenu {
     }
 
     public static String setShopName() {
-        sc.nextLine();
         System.out.println("Enter the shop name: ");
         String shopName = sc.nextLine();
 
@@ -138,10 +164,10 @@ public class MainMenu {
     }
 
     public static String setInvoiceHeader() {
+        sc.nextLine();
         System.out.println("Enter The invoice header(Phone/Email/Fax/Website): ");
         String invoiceHeader = sc.nextLine();
 
-        System.out.println("The Invoice Header is: " + invoiceHeader);
 
         return invoiceHeader;
     }
@@ -159,6 +185,8 @@ public class MainMenu {
             System.out.print("Enter your option: ");
             word = sc.nextInt();
             if (word == 1) {
+                sc.nextLine();
+
                 addItems();
             } else if (word == 2) {
                 removeItem();
@@ -178,24 +206,41 @@ public class MainMenu {
 
 //        System.out.println("Enter the item number: ");
 //        Integer id = sc.nextInt();
-        sc.nextLine();
-        System.out.println("What is the item's name: ");
-        String name = sc.nextLine();
-        System.out.println("What is the item's price? ");
-        Float price = sc.nextFloat();
-        sc.nextLine();
-        System.out.println("How many did you buy? ");
-        Integer quantity = sc.nextInt();
+
+        Boolean cond= true;
+        while (cond){
+            System.out.println("What is the item's name: ");
+            String name = sc.nextLine();
+            System.out.println("What is the item's price? ");
+            Float price = sc.nextFloat();
+            sc.nextLine();
+            System.out.println("How many did you buy? ");
+            Integer quantity = sc.nextInt();
+
+            //issuing a new item from Item class
+            Item item1 = new Item(name, price, quantity);
+
+            //creating a new id for the item everytime I run this code
+            item1.setId();
+
+            //adding item to MainMenu list items and printing the item
+            items.add(item1);
+            item1.print();
+
+            //checking if item was added
+            if (items.contains(item1)) {
+                System.out.println("Items added Successfully!\n");
+            } else {
+                System.out.println("Items wasn't added!\n");
+            }
 
 
-        Item item1 = new Item(name, price, quantity);
-        items.add(item1);
-
-        item1.print();
-        if (items.contains(item1)) {
-            System.out.println("Items added Successfully!\n");
-        } else {
-            System.out.println("Items wasn't added!\n");
+            sc.nextLine();
+            System.out.println("Do you want to add more items? y/n ");
+            String word = sc.nextLine();
+            if (word.equalsIgnoreCase("n")){
+                cond=false;
+            }
         }
     }
 
