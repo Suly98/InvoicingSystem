@@ -56,14 +56,12 @@ public class MainMenu {
         Customer customer = new Customer();
         customer.setFullName(customerName);
 
-        //initializing a date
-        Date date1 = new Date(date);
 
         //Creating an Invoice
         Invoice invoice = new Invoice();
         invoice.setFullName(customer);
         invoice.setHeader(setInvoiceHeader());
-        invoice.setDate(date1);
+        invoice.setDate(date);
         invoice.setPaidAmount(amountPaid);
 
         //adding invoice to the invoice map:
@@ -131,6 +129,7 @@ public class MainMenu {
     }
 
     public static String setShopName() {
+        sc.nextLine();
         System.out.println("Enter the shop name: ");
         String shopName = sc.nextLine();
         System.out.println("The new shop is: " + shopName);
@@ -139,10 +138,11 @@ public class MainMenu {
     }
 
     public static String setInvoiceHeader() {
+        sc.nextLine();
         System.out.println("Enter The invoice header(Phone/Email/Fax/Website): ");
         String invoiceHeader = sc.nextLine();
 
-        System.out.println("The InvoiceHeader is: " + invoiceHeader);
+        System.out.println("The Invoice Header is: " + invoiceHeader);
 
         return invoiceHeader;
     }
