@@ -45,9 +45,37 @@ public class MainMenu {
 
     public static void createNewInvoice() {
         sc.nextLine();
-        System.out.println("Enter the invoice date: ");
+        System.out.println("Enter the invoice date (YY-MM-DD): ");
+        String date = sc.nextLine();
         System.out.println("Enter the Customer name: ");
-        System.out.println("Enter the ");
+        String customerName = sc.nextLine();
+        System.out.println("What is the amount Paid: ");
+        Double amountPaid = sc.nextDouble();
+
+        //Initilize a Custemer
+        Customer customer = new Customer();
+        customer.setFullName(customerName);
+
+        //initializing a date
+        Date date1 = new Date(date);
+
+        //Creating an Invoice
+        Invoice invoice = new Invoice();
+        invoice.setFullName(customer);
+        invoice.setHeader(setInvoiceHeader());
+        invoice.setDate(date1);
+        invoice.setPaidAmount(amountPaid);
+
+        //adding invoice to the invoice map:
+        invoiceHashMap.put(invoice.getId(), invoice);
+
+
+
+//        (date, customerName,
+//                setInvoiceHeader(), invoice.NoOfItems,
+//                invoice.total(), invoice.getPaidAmount(),
+//                invoice.getBalance());
+
     }
 
     public static void reportStatistics() {
@@ -111,15 +139,39 @@ public class MainMenu {
     }
 
     public static String setInvoiceHeader() {
-        System.out.println("Enter The invoice header(Phone/Tel/Website/Fax): ");
+        System.out.println("Enter The invoice header(Phone/Email/Fax/Website): ");
         String invoiceHeader = sc.nextLine();
 
-        System.out.println("The new shop is: " + invoiceHeader);
+        System.out.println("The InvoiceHeader is: " + invoiceHeader);
 
         return invoiceHeader;
     }
 
 
+    public static void manageShopItems() {
+        int word;
+        do {
+            System.out.println("        Manage Shop Items:      ");
+            System.out.println("1- Add items ");
+            System.out.println("2- Delete Items ");
+            System.out.println("3- Change Item price");
+            System.out.println("4- Report Item Price");
+            System.out.println("5- Go Back ");
+            System.out.print("Enter your option: ");
+            word = sc.nextInt();
+            if (word == 1) {
+                addItems();
+            } else if (word == 2) {
+                removeItem();
+
+            } else if (word == 3) {
+                changeItemPrice();
+            } else if (word == 4) {
+                reportItems();
+
+            }
+        } while (word != 4);
+    }
 
 
     /***************** MANAGE SHOP ITEMS ************/
