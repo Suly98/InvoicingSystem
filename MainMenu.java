@@ -59,20 +59,20 @@ public class MainMenu {
 
         //Creating an Invoice
         Invoice invoice = new Invoice();
-        invoice.setFullName(customer);
+        invoice.setCustomer(customer);
         invoice.setHeader(setInvoiceHeader());
         invoice.setDate(date);
         invoice.setPaidAmount(amountPaid);
 
+        invoice.setItems(items);
+        invoice.setTotalAmount(Invoice.calculateTotalAmount(invoice.getItems()));
+
         //adding invoice to the invoice map:
         invoiceHashMap.put(invoice.getId(), invoice);
 
+        //to print the invoice
+        invoice.printInvoice();
 
-
-//        (date, customerName,
-//                setInvoiceHeader(), invoice.NoOfItems,
-//                invoice.total(), invoice.getPaidAmount(),
-//                invoice.getBalance());
 
     }
 
@@ -87,7 +87,7 @@ public class MainMenu {
     public static Double totalSales(){
         Double totalSales = 0.0;
         for (Invoice invoice: invoiceHashMap.values()){
-            totalSales += invoice.total();
+            totalSales += invoice.getTotalAmount();
         }
 
         return totalSales;
@@ -124,21 +124,20 @@ public class MainMenu {
     }
 
     public static void loadData() {
-//        for (Item item: items)
-
+        for (Invoice invoice: invoiceHashMap.values()){
+            System.out.println(invoice.items);
+        }
     }
 
     public static String setShopName() {
         sc.nextLine();
         System.out.println("Enter the shop name: ");
         String shopName = sc.nextLine();
-        System.out.println("The new shop is: " + shopName);
 
         return shopName;
     }
 
     public static String setInvoiceHeader() {
-        sc.nextLine();
         System.out.println("Enter The invoice header(Phone/Email/Fax/Website): ");
         String invoiceHeader = sc.nextLine();
 
@@ -170,15 +169,15 @@ public class MainMenu {
                 reportItems();
 
             }
-        } while (word != 4);
+        } while (word != 5);
     }
 
 
     /***************** MANAGE SHOP ITEMS ************/
     public static void addItems() {
-        sc.nextLine();
-        System.out.println("Enter the item number: ");
-        Integer id = sc.nextInt();
+
+//        System.out.println("Enter the item number: ");
+//        Integer id = sc.nextInt();
         sc.nextLine();
         System.out.println("What is the item's name: ");
         String name = sc.nextLine();
