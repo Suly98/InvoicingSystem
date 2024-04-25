@@ -37,11 +37,6 @@ public class Invoice {
         return totalAmt;
     }
 
-    /*-------------fUNCTIONS------------*/
-    //to add invoices
-//    public void addInvoice(Invoice invoice) {
-//        invoices.add(invoice);
-//    }
 
     //to print invoices
     public void printInvoice() {
@@ -58,7 +53,24 @@ public class Invoice {
 
     }
 
+    public void loadDate(){
+        System.out.println("Invoice No: " + id);
+        System.out.println("Shop name:  " + shopName);
+        System.out.println("Invoice header:  " + header);
+        System.out.println("Invoice Date: " + date);
+        System.out.println("Customer Name: " + customer.fullName);
+//        System.out.println("Items:" + );
+        System.out.println("Paid Amount: " + getPaidAmount());
+        System.out.println("Total amount : " + getTotalAmount());
+        System.out.println("The Balanced left: " + getBalance());
+        System.out.println("\n");
+    }
 
+
+
+    public void addItems(Item item){
+        items.add(item);
+    }
 
     public List<Item> getItems() {
         for (Item item : items) {
