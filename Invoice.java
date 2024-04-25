@@ -30,9 +30,7 @@ public class Invoice {
     public static double calculateTotalAmount(List<Item> items) {
         Double totalAmt = 0d;
         for (Item i : items) {
-            for (int j = 1; j <= i.getQuantity(); j++) {
-                totalAmt += i.getPrice().doubleValue();
-            }
+            totalAmt += i.getPrice() * i.getQuantity();
         }
         return totalAmt;
     }

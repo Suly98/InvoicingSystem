@@ -1,85 +1,82 @@
 package InvoiceSystem;
 
-import com.sun.tools.javac.Main;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Scanner;
 
-import java.util.*;
-
-public class MainMenu {
+public class InvoiceSystem {
     public static List<Item> items = new ArrayList<>();
     public static HashMap<Integer, Invoice> invoiceHashMap = new HashMap<>();
     public static Scanner sc = new Scanner(System.in);
-    public static Integer shopSettingsCounter;
-    public static Integer menuCounter;
-    public static Integer shopItemsCounter;
-
+    public static Integer shopSettingsCounter = 0;
+    public static Integer menuCounter = 0;
+    public static Integer shopItemsCounter = 0;
 
 
     public static void main(String[] args) {
-        Integer word;
+        Integer option = 0;
         do {
+
+            //FIXME: Surround with try/catch
+            //TODO: Make it fail-safe
             menuCounter++;
-            System.out.println("           Application Main Menu:       ");
-            System.out.println("1-Shop Settings");
-            System.out.println("2-Manage Shop Items");
-            System.out.println("3-Create New Invoice");
-            System.out.println("4-Report: Statistics");
-            System.out.println("5-Report: All Invoices");
-            System.out.println("6-Search Invoices");
-            System.out.println("7-Program Statistics");
-            System.out.println("8-Exit");
+            System.out.println(MenuConstants.mainMenu);
             System.out.print("Enter your option: ");
-            word = sc.nextInt();
-            if (word == 1) {
+            option = sc.nextInt();
+            if (option == 1) {
                 shopSettings();
-            } else if (word == 2) {
+            } else if (option == 2) {
                 manageShopItems();
-            } else if (word == 3) {
+            } else if (option == 3) {
                 createNewInvoice();
-            } else if (word == 4) {
+            } else if (option == 4) {
                 reportStatistics();
-            } else if (word == 5) {
+            } else if (option == 5) {
                 reportAllInvoices();
-            } else if (word == 6) {
+            } else if (option == 6) {
                 searchInvoices();
-            } else if (word == 7) {
+            } else if (option == 7) {
                 programStatistics();
             }
-        } while (word != 8);
+        } while (option != 8);
 
     }
 
-    public static void programStatistics(){
+    public static void programStatistics() {
         System.out.println(menuCounter + " Visited Main Menu");
         System.out.println(shopSettingsCounter + " Visited Shop Settings");
         System.out.println(shopItemsCounter + " Visited Manage Shop Items");
     }
 
-    public static void searchInvoices(){
+    public static void searchInvoices() {
         System.out.println("Enter the invoice number that you want to search: ");
         Integer invoiceNo = sc.nextInt();
-
-        for(Invoice invoice: invoiceHashMap.values()){
-            if(invoice.id == invoiceNo){
+        Invoice invoiceToSearch = invoiceHashMap.get(invoiceNo);
+        invoiceToSearch.printInvoice();
+/*        for (Invoice invoice : invoiceHashMap.values()) {
+            if (invoice.id == invoiceNo) {
                 invoice.printInvoice();
             }
-        }
+        }*/
     }
 
 
     public static void createNewInvoice() {
 
         sc.nextLine();
+
+        //FIXME: Creating customer should be in separate place
 //        MainMenu.items.clear();
+        Customer customer = new Customer();
         System.out.println("Enter the invoice date (YY-MM-DD): ");
         String date = sc.nextLine();
         System.out.println("Enter the Customer name: ");
-        String customerName = sc.nextLine();
+        customer.setFullName(sc.nextLine());
         System.out.println("What is the amount Paid: ");
         Double amountPaid = sc.nextDouble();
 
         //Initilize a Custemer
-        Customer customer = new Customer();
-        customer.setFullName(customerName);
 
 
         //Creating an Invoice
@@ -106,12 +103,8 @@ public class MainMenu {
         //setting an id n adding invoice to the invoice map:
         invoice.setId();
         invoiceHashMap.put(invoice.getId(), invoice);
-
-
         //to print the invoice
         invoice.printInvoice();
-
-
     }
 
 
@@ -123,9 +116,9 @@ public class MainMenu {
         System.out.println("Total of Sales: " + totalSales());
     }
 
-    public static Double totalSales(){
+    public static Double totalSales() {
         Double totalSales = 0.0;
-        for (Invoice invoice: invoiceHashMap.values()){
+        for (Invoice invoice : invoiceHashMap.values()) {
             totalSales += invoice.getTotalAmount();
         }
 
@@ -133,9 +126,9 @@ public class MainMenu {
     }
 
 
-    public static void reportAllInvoices(){
+    public static void reportAllInvoices() {
         System.out.println("    All Invoices:   ");
-        for(Invoice invoice: invoiceHashMap.values()){
+        for (Invoice invoice : invoiceHashMap.values()) {
             invoice.printInvoice();
         }
     }
@@ -143,8 +136,10 @@ public class MainMenu {
 
     /************ SHOP SETTINGS *************/
     public static void shopSettings() {
-        int word;
+        int word; //FIXME: Rename
         do {
+
+            //TODO: Change to constants class for menu as per requirements
             shopSettingsCounter++;
             System.out.println("            Shop Settings:      ");
             System.out.println("1-Load Data (Items and invoices)");
@@ -157,6 +152,7 @@ public class MainMenu {
                 loadData();
                 sc.nextLine();
             } else if (word == 2) {
+                //FIXME: Update ShopName in User's provided invoice
                 setShopName();
                 sc.nextLine();
             } else if (word == 3) {
@@ -166,8 +162,8 @@ public class MainMenu {
 
     }
 
-    public static void loadData() {
-        for (Invoice invoice: invoiceHashMap.values()){
+    public static void loadData() { //FIXME: Load data is not loading data
+        for (Invoice invoice : invoiceHashMap.values()) {
             System.out.println(invoice.items);
         }
     }
@@ -175,7 +171,6 @@ public class MainMenu {
     public static String setShopName() {
         System.out.println("Enter the shop name: ");
         String shopName = sc.nextLine();
-
         return shopName;
     }
 
@@ -204,10 +199,9 @@ public class MainMenu {
             if (word == 1) {
                 sc.nextLine();
 
-                MainMenu.items = addItems();
+                InvoiceSystem.items = addItems();
             } else if (word == 2) {
                 removeItem();
-
             } else if (word == 3) {
                 changeItemPrice();
             } else if (word == 4) {
@@ -226,8 +220,8 @@ public class MainMenu {
 //        System.out.println("Enter the item number: ");
 //        Integer id = sc.nextInt();
 
-        Boolean cond= true;
-        while (cond){
+        Boolean cond = true;
+        while (cond) {
             System.out.println("What is the item's name: ");
             String name = sc.nextLine();
             System.out.println("What is the item's price? ");
@@ -252,13 +246,11 @@ public class MainMenu {
             } else {
                 System.out.println("Items wasn't added!\n");
             }
-
-
             sc.nextLine();
             System.out.println("Do you want to add more items? y/n ");
             String word = sc.nextLine();
-            if (word.equalsIgnoreCase("n")){
-                cond=false;
+            if (word.equalsIgnoreCase("n")) {
+                cond = false;
             }
         }
         return newItems;
@@ -268,10 +260,19 @@ public class MainMenu {
         sc.nextLine();
         System.out.println("Enter the item name that you want to remove: ");
         String name = sc.nextLine();
+        Item itemToRemove = new Item();
 
         //I tried items.remove but it didn't work because it is not addressed the same in the code
         // but removeif does the wonderful job
+
         items.removeIf(item -> item.getName().equals(name));
+
+/*        for (Item i: items) {
+            if(i.getName().equals(name)){
+                itemToRemove = i;
+            }
+        }
+        items.remove(itemToRemove);*/
 
 
         if (!items.contains(name)) {
@@ -291,7 +292,7 @@ public class MainMenu {
         System.out.println("Enter the new price: ");
         Float newPrice = sc.nextFloat();
         for (Item item : items) {
-            if (item.id == itemNo) {
+            if (item.id.equals(itemNo)) {
                 item.setPrice(newPrice);
                 System.out.println("Item price was changed successfully!\n");
             } else {
