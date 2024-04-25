@@ -55,8 +55,8 @@ public class Item {
         return id;
     }
 
-    public void setId() {
-        this.id = calculateId();
+    public void setId(Integer id) {
+        this.id = id;
     }
 
         public static int calculateId() {
