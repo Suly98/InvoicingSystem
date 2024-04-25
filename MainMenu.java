@@ -59,7 +59,7 @@ public class MainMenu {
     public static void createNewInvoice() {
 
         sc.nextLine();
-        MainMenu.items.clear();
+//        MainMenu.items.clear();
         System.out.println("Enter the invoice date (YY-MM-DD): ");
         String date = sc.nextLine();
         System.out.println("Enter the Customer name: ");
@@ -80,11 +80,16 @@ public class MainMenu {
         invoice.setPaidAmount(amountPaid);
         invoice.setShopName(setShopName());
 
+        //adding items to the invoice
+        //Setting an id for each item in the invoice
+        List<Item> items = addItems();
+        int itemNo = 1;
+        for (Item item : items) {
+            item.setId(itemNo++);
+        }
+        invoice.setItems(items);
 
-        addItems();
-
-
-        invoice.setItems(MainMenu.items);
+//        invoice.setItems(addItems());
 
         invoice.setTotalAmount(Invoice.calculateTotalAmount(invoice.getItems()));
 
@@ -187,7 +192,7 @@ public class MainMenu {
             if (word == 1) {
                 sc.nextLine();
 
-                addItems();
+                MainMenu.items = addItems();
             } else if (word == 2) {
                 removeItem();
 
@@ -202,7 +207,9 @@ public class MainMenu {
 
 
     /***************** MANAGE SHOP ITEMS ************/
-    public static void addItems() {
+    public static List<Item> addItems() {
+
+        List<Item> newItems = new ArrayList<>();
 
 //        System.out.println("Enter the item number: ");
 //        Integer id = sc.nextInt();
@@ -221,14 +228,14 @@ public class MainMenu {
             Item item1 = new Item(name, price, quantity);
 
             //creating a new id for the item everytime I run this code
-            item1.setId();
+//            item1.setId();
 
             //adding item to MainMenu list items and printing the item
-            items.add(item1);
+            newItems.add(item1);
             item1.print();
 
             //checking if item was added
-            if (items.contains(item1)) {
+            if (newItems.contains(item1)) {
                 System.out.println("Items added Successfully!\n");
             } else {
                 System.out.println("Items wasn't added!\n");
@@ -242,6 +249,7 @@ public class MainMenu {
                 cond=false;
             }
         }
+        return newItems;
     }
 
     public static void removeItem() {
