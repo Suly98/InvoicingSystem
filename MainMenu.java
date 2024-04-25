@@ -8,12 +8,16 @@ public class MainMenu {
     public static List<Item> items = new ArrayList<>();
     public static HashMap<Integer, Invoice> invoiceHashMap = new HashMap<>();
     public static Scanner sc = new Scanner(System.in);
-    public Integer itemsCounter;
-    public Integer invoiceCounter;
+    public static Integer shopSettingsCounter;
+    public static Integer menuCounter;
+    public static Integer shopItemsCounter;
+
+
 
     public static void main(String[] args) {
         Integer word;
         do {
+            menuCounter++;
             System.out.println("           Application Main Menu:       ");
             System.out.println("1-Shop Settings");
             System.out.println("2-Manage Shop Items");
@@ -38,10 +42,16 @@ public class MainMenu {
             } else if (word == 6) {
                 searchInvoices();
             } else if (word == 7) {
-                // programStatistics();
+                programStatistics();
             }
         } while (word != 8);
 
+    }
+
+    public static void programStatistics(){
+        System.out.println(menuCounter + " Visited Main Menu");
+        System.out.println(shopSettingsCounter + " Visited Shop Settings");
+        System.out.println(shopItemsCounter + " Visited Manage Shop Items");
     }
 
     public static void searchInvoices(){
@@ -135,6 +145,7 @@ public class MainMenu {
     public static void shopSettings() {
         int word;
         do {
+            shopSettingsCounter++;
             System.out.println("            Shop Settings:      ");
             System.out.println("1-Load Data (Items and invoices)");
             System.out.println("2-Set Shop Name (data should be saved)");
@@ -181,6 +192,7 @@ public class MainMenu {
     public static void manageShopItems() {
         int word;
         do {
+            shopItemsCounter++;
             System.out.println("        Manage Shop Items:      ");
             System.out.println("1- Add items ");
             System.out.println("2- Delete Items ");
