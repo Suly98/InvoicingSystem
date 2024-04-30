@@ -19,6 +19,10 @@ public class Item {
         this.quantity = quantity;
     }
 
+    public Item() {
+
+    }
+
 
     /*-------------fUNCTIONS------------*/
     //to add items

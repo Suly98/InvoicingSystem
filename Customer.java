@@ -7,7 +7,7 @@ public class Customer {
     String fullName;
     String phoneNo;
 
-    
+
 
 
     public Integer getId() {
