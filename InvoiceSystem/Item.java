@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Item {
+class Item implements itemInterface{
     public static int counter = 1;
     Integer id;
     String name;
@@ -58,6 +58,8 @@ public class Item {
     public Integer getId() {
         return id;
     }
+
+
 
     public void setId(Integer id) {
         this.id = id;
