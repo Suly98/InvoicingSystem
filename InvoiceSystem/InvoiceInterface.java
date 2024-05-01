@@ -9,5 +9,6 @@ interface InvoiceInterface {
     public void setCustomer(Customer customer);
     public void setDate(String date);
     public void setId();
+    public Double getBalance();
 
 }
