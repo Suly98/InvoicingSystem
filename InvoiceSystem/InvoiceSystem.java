@@ -15,32 +15,35 @@ public class InvoiceSystem {
 
 
     public static void main(String[] args) {
-        Integer option = 0;
-        do {
+        try {
+            Integer option = 0;
+            do {
 
-            //FIXME: Surround with try/catch
-            //TODO: Make it fail-safe
-            menuCounter++;
-            System.out.println(MenuConstants.mainMenu);
-            System.out.print("Enter your option: ");
-            option = sc.nextInt();
-            if (option == 1) {
-                shopSettings();
-            } else if (option == 2) {
-                manageShopItems();
-            } else if (option == 3) {
-                createNewInvoice();
-            } else if (option == 4) {
-                reportStatistics();
-            } else if (option == 5) {
-                reportAllInvoices();
-            } else if (option == 6) {
-                searchInvoices();
-            } else if (option == 7) {
-                programStatistics();
-            }
-        } while (option != 8);
-
+                //FIXME: Surround with try/catch -- Done
+                //TODO: Make it fail-safe -- Done
+                menuCounter++;
+                System.out.println(MenuConstants.mainMenu);
+                System.out.print("Enter your option: ");
+                option = sc.nextInt();
+                if (option == 1) {
+                    shopSettings();
+                } else if (option == 2) {
+                    manageShopItems();
+                } else if (option == 3) {
+                    createNewInvoice();
+                } else if (option == 4) {
+                    reportStatistics();
+                } else if (option == 5) {
+                    reportAllInvoices();
+                } else if (option == 6) {
+                    searchInvoices();
+                } else if (option == 7) {
+                    programStatistics();
+                }
+            } while (option != 8);
+        } catch (Exception e) {
+            System.out.println("You Entered a wrong input!");
+        }
     }
 
     public static void programStatistics() {
@@ -54,11 +57,6 @@ public class InvoiceSystem {
         Integer invoiceNo = sc.nextInt();
         Invoice invoiceToSearch = invoiceHashMap.get(invoiceNo);
         invoiceToSearch.printInvoice();
-/*        for (Invoice invoice : invoiceHashMap.values()) {
-            if (invoice.id == invoiceNo) {
-                invoice.printInvoice();
-            }
-        }*/
     }
 
 
@@ -75,8 +73,6 @@ public class InvoiceSystem {
         customer.setFullName(sc.nextLine());
         System.out.println("What is the amount Paid: ");
         Double amountPaid = sc.nextDouble();
-
-        //Initilize a Custemer
 
 
         //Creating an Invoice
@@ -96,7 +92,6 @@ public class InvoiceSystem {
         }
         invoice.setItems(items);
 
-//        invoice.setItems(addItems());
 
         invoice.setTotalAmount(Invoice.calculateTotalAmount(invoice.getItems()));
 
@@ -136,30 +131,33 @@ public class InvoiceSystem {
 
     /************ SHOP SETTINGS *************/
     public static void shopSettings() {
-        int word; //FIXME: Rename
-        do {
+        int option; //FIXME: Rename -- done
+        try {
+            do {
 
-            //TODO: Change to constants class for menu as per requirements
-            shopSettingsCounter++;
-            System.out.println("            Shop Settings:      ");
-            System.out.println("1-Load Data (Items and invoices)");
-            System.out.println("2-Set Shop Name (data should be saved)");
-            System.out.println("3-Set Invoice Header (Tel / Fax / Email / Website)");
-            System.out.println("4-Go Back");
-            System.out.print("Enter your option: ");
-            word = sc.nextInt();
-            if (word == 1) {
-                loadData();
-                sc.nextLine();
-            } else if (word == 2) {
-                //FIXME: Update ShopName in User's provided invoice
-                setShopName();
-                sc.nextLine();
-            } else if (word == 3) {
-                setInvoiceHeader();
-            }
-        } while (word != 4);
-
+                //TODO: Change to constants class for menu as per requirements
+                shopSettingsCounter++;
+                System.out.println("            Shop Settings:      ");
+                System.out.println("1-Load Data (Items and invoices)");
+                System.out.println("2-Set Shop Name (data should be saved)");
+                System.out.println("3-Set Invoice Header (Tel / Fax / Email / Website)");
+                System.out.println("4-Go Back");
+                System.out.print("Enter your option: ");
+                option = sc.nextInt();
+                if (option == 1) {
+                    loadData();
+                    sc.nextLine();
+                } else if (option == 2) {
+                    //FIXME: Update ShopName in User's provided invoice
+                    setShopName();
+                    sc.nextLine();
+                } else if (option == 3) {
+                    setInvoiceHeader();
+                }
+            } while (option != 4);
+        } catch (Exception e){
+            System.out.println("You Entered a wrong input!");
+        }
     }
 
     public static void loadData() { //FIXME: Load data is not loading data
