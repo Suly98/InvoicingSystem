@@ -2,7 +2,7 @@ package InvoiceSystem;
 
 import java.util.Objects;
 
-public class Customer {
+public class Customer implements customerInterface {
     Integer id;
     String fullName;
     String phoneNo;
