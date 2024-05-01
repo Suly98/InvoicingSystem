@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-class Invoice implements InvoiceInterface {
+public class Invoice implements InvoiceInterface {
 
     //To auto add the invoices id and incrementing them one by one:
     public static Integer nextId = 1;

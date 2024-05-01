@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-class Item implements itemInterface{
+public class Item implements itemInterface{
     public static int counter = 1;
     Integer id;
     String name;
