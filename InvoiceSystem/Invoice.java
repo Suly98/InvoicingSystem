@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Invoice {
+class Invoice implements InvoiceInterface {
 
     //To auto add the invoices id and incrementing them one by one:
     public static Integer nextId = 1;
@@ -51,6 +51,7 @@ public class Invoice {
 
     }
 
+
     public void loadDate(){
         System.out.println("Invoice No: " + id);
         System.out.println("Shop name:  " + shopName);
@@ -77,9 +78,12 @@ public class Invoice {
         return items;
     }
 
+
+
     public void setItems(List<Item> items) {
         this.items = items;
     }
+
 
     public void setShopName(String shopName) {
         this.shopName = shopName;
